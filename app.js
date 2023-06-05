@@ -19,6 +19,7 @@ const postRoutes = require('./routes/post');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(express.json());
 app.use('/', postRoutes);
 
 app.listen(port, () => {
