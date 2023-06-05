@@ -1,12 +1,12 @@
 const Post = require('../models/post');
 
 exports.getPosts = (req, res) => {
-    res.json({
-        posts: [
-            {title: 'Name first post'},
-            {title: 'Name second post'},
-        ]
-    });
+
+    const posts = Post.find().select("_id title body")
+    .then((posts) => {
+        res.json({ posts })
+    })
+    .catch(err => console.log(err));
 };
 
 exports.createPost = async (req, res) => {
@@ -14,11 +14,11 @@ exports.createPost = async (req, res) => {
         const post = new Post(req.body);
         console.log("CREATE POST: ", req.body);
         const result = await post.save();
-        res.status(200).json({
+        res.json({
             post: result
         });
     } catch (err) {
-        res.status(400).json({
+        res.json({
             error: err.message
         });
     }
